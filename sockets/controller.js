@@ -9,7 +9,7 @@ const socketController = (socket) => {
   // Emite el evento cuando un cliente se conecta
   // ==========================================================
   socket.emit('ultimo-ticket', ticketControl.ultimo);
-  socket.emit('ultimos-cuatro', ticketControl.ultimos4);
+  socket.emit('estado-actual', ticketControl.ultimos4);
   socket.emit('tickets-pendientes', ticketControl.tickets.length);
 
   // ==========================================================
@@ -40,7 +40,7 @@ const socketController = (socket) => {
     const tickeParaAtender = ticketControl.atenderTikect(escritorio)
 
     // Notifica cambios a la pantalla publica
-    socket.broadcast.emit('ultimos-cuatro', ticketControl.ultimos4);
+    socket.broadcast.emit('estado-actual', ticketControl.ultimos4);
     socket.emit('tickets-pendientes', ticketControl.tickets.length);
     socket.broadcast.emit('tickets-pendientes', ticketControl.tickets.length);
 
