@@ -12,19 +12,15 @@ const socketController = (socket) => {
   socket.emit('ultimos-cuatro', ticketControl.ultimos4);
   socket.emit('tickets-pendientes', ticketControl.tickets.length);
 
-  const pendientes = ticketControl.tickets.length;
-
   // ==========================================================
   // Escucha el evento del cliente en "nuevo-ticket" 
   // ==========================================================
   socket.on('siguiente-ticket', (payload, callback) => {
 
-
     const siguienteTicket = ticketControl.siguiente();
     callback(siguienteTicket);
-
     // notifica cuando hay nuevo ticket
-    socket.broadcast.emit('tickets-pendientes', pendientes);
+    socket.broadcast.emit('tickets-pendientes', ticketControl.tickets.length);
 
   })
 
@@ -32,8 +28,8 @@ const socketController = (socket) => {
   // Escucha el evento del cliente en "atender-ticket" 
   // ==========================================================
   socket.on('atender-ticket', (payload, callback) => {
-    const { escritorio } = payload;
 
+    const { escritorio } = payload;    
     if (!escritorio) {
       return callback({
         ok: false,
@@ -42,12 +38,11 @@ const socketController = (socket) => {
     }
 
     const tickeParaAtender = ticketControl.atenderTikect(escritorio)
-    // const pendientes = ticketControl.tickets.length;
 
     // Notifica cambios a la pantalla publica
     socket.broadcast.emit('ultimos-cuatro', ticketControl.ultimos4);
-    socket.emit('tickets-pendiente', ticketControl.tickets.length);
-    socket.broadcast.emit('tickets-pendiente', pendientes);
+    socket.emit('tickets-pendientes', ticketControl.tickets.length);
+    socket.broadcast.emit('tickets-pendientes', ticketControl.tickets.length);
 
     // Validamos que el ticket exista y lo enviamos al cliente
     if (!tickeParaAtender) {

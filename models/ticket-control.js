@@ -12,14 +12,6 @@ class Ticket {
 
 class TicketControl {
 
-  get getToJson() {
-    return {
-      ultimo: this.ultimo,
-      hoy: this.hoy,
-      tickets: this.tickets,
-      ultimos4: this.ultimos4
-    }
-  }
 
   constructor() {
     this.ultimo = 0;
@@ -30,15 +22,25 @@ class TicketControl {
     this.init();
   }
 
+  get getToJson() {
+    return {
+      ultimo: this.ultimo,
+      hoy: this.hoy,
+      tickets: this.tickets,
+      ultimos4: this.ultimos4
+    }
+  }
+
   init() {
     const data = require('../db/data.json');
     const { ultimo, hoy, tickets, ultimos4 } = data;
-    // console.log(ultimos4)
+
     if (hoy === this.hoy) {
       this.ultimo = ultimo;
       this.tickets = tickets;
       this.ultimos4 = ultimos4;
     } else {
+      // es otro dia 
       this.guardarDb();
     }
   }
@@ -54,7 +56,7 @@ class TicketControl {
     this.tickets.push(ticket);
 
     this.guardarDb();
-    return ticket.numero;
+    return 'Ticket ' + ticket.numero;
   }
 
   atenderTikect(escritorio) {
@@ -63,7 +65,7 @@ class TicketControl {
       return null;
     }
 
-    // elimina el primero y lo retorna
+    // elimina el primer objt y lo retorna
     const ticket = this.tickets.shift();
     // al ticket retornado le agregamos el param escritorio
     ticket.escritorio = escritorio;
@@ -76,10 +78,6 @@ class TicketControl {
 
     this.guardarDb();
     return ticket;
-  }
-
-  ticketsLength() {
-    return this.tickets.length;
   }
 
 }

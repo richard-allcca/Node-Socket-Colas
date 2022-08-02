@@ -32,14 +32,14 @@ socket.on('disconnect', () => {
   $btnAtender.disabled = true;
 })
 
-socket.on('tickets-pendientes', (payload) => {
-  console.log('conteo', payload);
-  if (payload === 0) {
-    $alert.style.display = 'none';
+socket.on('tickets-pendientes', (pendientes) => {
+
+  if (pendientes === 0) {
+    $lblPendientes.style.display = 'none';
   } else {
-    $lblPendientes.innerText = payload;
+    $lblPendientes.style.display = '';
+    $lblPendientes.innerText = pendientes;
   }
-  $lblPendientes.innerText = payload;
 })
 
 // ==========================================================
@@ -49,16 +49,13 @@ $btnAtender.addEventListener('click', () => {
 
   // emitimos el evento al controller para que atienda el ticket
   socket.emit('atender-ticket', { escritorio }, (payload) => {
-    // console.log(payload);
+
     const { ok, ticket, message } = payload;
-
     if (!ok) {
-      $alert.style.display = 'block';
       $small.innerText = 'Nadie';
-      $alert.innerText = message;
-      return;
+      $btnAtender.disabled = true;
+      return $alert.style.display = '';
     }
-
     $small.innerText = `Ticket ${ticket.numero}`;
 
   })

@@ -27,7 +27,7 @@ $btnCrear.addEventListener('click', () => {
   // ejecuta el evento "siguiente-ticket" en el controller
   socket.emit('siguiente-ticket', null, (ticket) => {
     // console.log(ticket);
-    $lblNuevoTicket.innerText = `Ticket ${ticket}`;
+    $lblNuevoTicket.innerText = ticket;
   })
 
 })
