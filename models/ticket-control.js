@@ -40,7 +40,6 @@ class TicketControl {
       this.tickets = tickets;
       this.ultimos4 = ultimos4;
     } else {
-      // es otro dia 
       this.guardarDb();
     }
   }
@@ -60,12 +59,10 @@ class TicketControl {
   }
 
   atenderTikect(escritorio) {
-    // console.log(this.ultimos4)
     if (this.tickets.length === 0) {
       return null;
     }
 
-    // elimina el primer objt y lo retorna
     const ticket = this.tickets.shift();
     // al ticket retornado le agregamos el param escritorio
     ticket.escritorio = escritorio;

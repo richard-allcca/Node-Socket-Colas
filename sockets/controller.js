@@ -13,7 +13,7 @@ const socketController = (socket) => {
   socket.emit('tickets-pendientes', ticketControl.tickets.length);
 
   // ==========================================================
-  // Escucha el evento del cliente en "nuevo-ticket" 
+  // Escucha el evento del cliente en "nuevo-ticket"
   // ==========================================================
   socket.on('siguiente-ticket', (payload, callback) => {
 
@@ -25,11 +25,11 @@ const socketController = (socket) => {
   })
 
   // ==========================================================
-  // Escucha el evento del cliente en "atender-ticket" 
+  // Escucha el evento del cliente en "atender-ticket"
   // ==========================================================
   socket.on('atender-ticket', (payload, callback) => {
 
-    const { escritorio } = payload;    
+    const { escritorio } = payload;
     if (!escritorio) {
       return callback({
         ok: false,

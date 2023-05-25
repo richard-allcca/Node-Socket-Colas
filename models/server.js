@@ -4,13 +4,15 @@ const cors = require('cors');
 
 const { socketController } = require('../sockets/controller');
 
+// NOTE -  con socket es necesario levantar otro server con http, y poner en escucha este server en lugar de el de express en el listen()
 class Server {
 
   constructor() {
-    this.app = express();
-    this.port = process.env.PORT;
+    this.app    = express();
+    this.port   = process.env.PORT;
+
     this.server = require('http').createServer(this.app);
-    this.io = require('socket.io')(this.server);
+    this.io     = require('socket.io')(this.server);
 
     this.paths = {};
 
