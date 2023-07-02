@@ -9,9 +9,7 @@ class Ticket {
   }
 }
 
-
 class TicketControl {
-
 
   constructor() {
     this.ultimo = 0;
@@ -22,7 +20,8 @@ class TicketControl {
     this.init();
   }
 
-  get getToJson() {
+  // crea el obj para guardarla en el json
+  get toJson() {
     return {
       ultimo: this.ultimo,
       hoy: this.hoy,
@@ -31,6 +30,7 @@ class TicketControl {
     }
   }
 
+  // Carga la data al iniciar la app
   init() {
     const data = require('../db/data.json');
     const { ultimo, hoy, tickets, ultimos4 } = data;
@@ -44,11 +44,15 @@ class TicketControl {
     }
   }
 
+  // Data creada en el constructor a data.json
   guardarDb() {
+
     const dbPath = path.join(__dirname, '../db/data.json');
-    fs.writeFileSync(dbPath, JSON.stringify(this.getToJson))
+    fs.writeFileSync(dbPath, JSON.stringify(this.toJson))
+
   }
 
+  // Crea y guarda un nuevo ticket
   siguiente() {
     this.ultimo += 1;
     const ticket = new Ticket(this.ultimo, null);
@@ -59,24 +63,20 @@ class TicketControl {
   }
 
   atenderTikect(escritorio) {
-    if (this.tickets.length === 0) {
-      return null;
-    }
+    if (this.tickets.length === 0) return null;
 
     const ticket = this.tickets.shift();
-    // al ticket retornado le agregamos el param escritorio
+
     ticket.escritorio = escritorio;
 
+    // Muestra en pantalla el ticket a ser atendido
     this.ultimos4.unshift(ticket);
 
-    if (this.ultimos4.length > 4) {
-      this.ultimos4.splice(-1, 1);
-    }
+    if (this.ultimos4.length > 4) this.ultimos4.splice(-1, 1);
 
     this.guardarDb();
     return ticket;
   }
-
 }
 
 module.exports = {

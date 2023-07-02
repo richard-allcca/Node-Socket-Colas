@@ -3,9 +3,6 @@ const $btnCrear = document.querySelector('button');
 
 const socket = io();
 
-// ==========================================================
-// socket.on escucha eventos del de socket.emit
-// ==========================================================
 
 socket.on('connet', () => {
   $btnCrear.disabled = false;
@@ -19,15 +16,13 @@ socket.on('ultimo-ticket', (ultimo) => {
   $lblNuevoTicket.innerText = `Último ticket: ${ultimo}`;
 })
 
-// ==========================================================
-// Evento del DOM
-// ==========================================================
+
 $btnCrear.addEventListener('click', () => {
 
-  // ejecuta el evento "siguiente-ticket" en el controller
+  // Ejecuta "siguiente-ticket" en el controller
   socket.emit('siguiente-ticket', null, (ticket) => {
-    // console.log(ticket);
+
+    // recibe el ticket crado
     $lblNuevoTicket.innerText = ticket;
   })
-
 })

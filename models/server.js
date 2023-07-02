@@ -5,6 +5,7 @@ const cors = require('cors');
 const { socketController } = require('../sockets/controller');
 
 // NOTE -  con socket es necesario levantar otro server con http, y poner en escucha este server en lugar de el de express en el listen()
+
 class Server {
 
   constructor() {
@@ -33,19 +34,14 @@ class Server {
 
     // Directorio Público
     this.app.use(express.static('public'));
-
   }
 
   routes() {
-
     // this.app.use( this.paths.auth, require('../routes/auth'));
-
   }
 
   sockets() {
-
     this.io.on('connection', socketController);
-
   }
 
   listen() {
@@ -53,10 +49,7 @@ class Server {
       console.log('Servidor corriendo en puerto', this.port);
     });
   }
-
 }
-
-
 
 
 module.exports = Server;

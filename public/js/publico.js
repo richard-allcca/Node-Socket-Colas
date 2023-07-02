@@ -15,6 +15,7 @@ socket.on('estado-actual', (payload) => {
   audio.play();
 
   const [ ticket1, ticket2, ticket3, ticket4 ] = payload;
+
   if (ticket1) {
     $lblTicket1.innerText = 'Ticket ' + ticket1.numero;
     $lblEscritorio1.innerText = ticket1.escritorio;
