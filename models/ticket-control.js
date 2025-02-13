@@ -62,7 +62,7 @@ class TicketControl {
     return 'Ticket ' + ticket.numero;
   }
 
-  atenderTikect(escritorio) {
+  atenderTicket(escritorio) {
     if (this.tickets.length === 0) return null;
 
     const ticket = this.tickets.shift();

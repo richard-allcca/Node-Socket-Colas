@@ -32,8 +32,8 @@ const socketController = (socket) => {
       });
     }
 
-    // Respuesta al cliente con callbak
-    const ticket = ticketControl.atenderTikect(escritorio);
+    // Respuesta al cliente con callback
+    const ticket = ticketControl.atenderTicket(escritorio);
     if (!ticket) {
       callback({
         ok: false,
